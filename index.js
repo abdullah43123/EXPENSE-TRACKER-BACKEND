@@ -13,6 +13,9 @@ const app = express()
 app.use(express.json())
 
 
+app.get('/', (req, res) => {
+    res.send('Hello from Railway!');
+});
 
 mongoose.connection.on("open", () => {
     console.log(`MongoDB Database Connected`)
