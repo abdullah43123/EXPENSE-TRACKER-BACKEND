@@ -52,7 +52,7 @@ app.get('/api/user/get', verifyToken, async (req, res) => {
     try {
         // const data = await User.find()
         // // console.log(data)
-        return res.send({ success: true, user: req.user }) 
+        return res.send({ success: true, user: req.user })
         // return res.send({ success: true, users: data })
 
     } catch (error) {
@@ -67,6 +67,5 @@ app.use('/auth', expenseRoute)
 app.use('/auth', incomeRoute)
 
 
-app.listen(5000, () => {
-    console.log(`Server is Running on Port 5000`)
-})
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
