@@ -10,7 +10,9 @@ const verifyToken = require('./middleware/auth')
 
 require('dotenv').config()
 const app = express()
+app.use(cors())
 app.use(express.json())
+
 
 
 app.get('/', (req, res) => {
@@ -63,7 +65,7 @@ app.get('/api/user/get', verifyToken, async (req, res) => {
     }
 })
 
-app.use(cors())
+
 app.use('/auth', categoryRoute)
 app.use('/auth', authRoutes)
 app.use('/auth', expenseRoute)
