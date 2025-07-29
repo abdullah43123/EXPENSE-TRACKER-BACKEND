@@ -14,21 +14,16 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser());
-app.use(cors({
-    origin: 'https://expense-tracker-git-master-abdullah-aslams-projects-407e8d73.vercel.app/',
-    credentials: true
-}));
-
 
 
 app.get('/', (req, res) => {
     res.send('Hello from Railway!');
 });
 
+
 mongoose.connection.on("open", () => {
     console.log(`MongoDB Database Connected`)
 })
-
 
 app.post('/api/user/create', async (req, res) => {
     try {

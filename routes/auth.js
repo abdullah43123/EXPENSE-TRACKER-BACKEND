@@ -117,20 +117,25 @@ router.get("/verify/:token", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
+        console.log("CHECK BODY");
+        
         const { email, password } = req.body;
         console.log(email);
-
-
+        console.log(password);
+        
+        
         const emailExist = await User.findOne({ email });
         console.log(emailExist);
-
+        
         if (!emailExist) {
             return res.status(401).send({ message: "Account Not Found" });
         }
-
+        console.log("CHECK BODY 1");
+        
         if (!emailExist.isVerified) {
             return res.status(400).send({ message: "Please verify your email first." });
         }
+        console.log("CHECK BODY 2");
 
         console.log("Hello Match");
         const isMatch = await bcrypt.compare(password, emailExist.password);
