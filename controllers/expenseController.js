@@ -54,3 +54,12 @@ const InsertExpenseData = async (req, res) => {
 }
 
 module.exports = { InsertExpenseData, FetchAllData, FetchById, DeleteById }
+
+// {
+//     "date" : "TODAY DATE",
+//     "amount" : 500,
+//     "description" : "Hello",
+//     "category" : "Category",
+//     "userId" : "68813fe7decfece525fe3f3f"
+
+// }

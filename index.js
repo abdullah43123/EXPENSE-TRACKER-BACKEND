@@ -11,7 +11,12 @@ const verifyToken = require('./middleware/auth')
 require('dotenv').config()
 const app = express()
 app.use(cors())
+app.use(cookieParser());
 app.use(express.json())
+app.use(cors({
+    origin: 'https://expense-tracker-git-master-abdullah-aslams-projects-407e8d73.vercel.app/',
+    credentials: true
+}));
 
 
 
