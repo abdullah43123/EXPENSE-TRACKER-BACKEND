@@ -72,5 +72,6 @@ app.use('/auth', expenseRoute)
 app.use('/auth', incomeRoute)
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
