@@ -41,7 +41,7 @@ router.post("/register", async (req, res) => {
             }
         });
 
-        const verifyUrl = `http://localhost:5000/auth/verify/${token}`;
+        const verifyUrl = `${process.env.BACKEND_URL}/auth/verify/${token}`;
 
         const mailOptions = {
             from: "aabdullahaslam91@gmail.com",
@@ -73,65 +73,46 @@ router.get("/verify/:token", async (req, res) => {
     try {
         const { token } = req.params;
         const decoded = jwt.verify(token, JWT_SECRET);
+        console.log("DECODED:", decoded);
 
         const user = await User.findById(decoded.userId);
+        console.log(user);
+
         if (!user) return res.status(404).send({ message: "User not found" });
 
         if (user.isVerified) {
-            return res.send({ message: "User already verified" });
-        }
+            // return res.send({ message: "User already verified" });
+            return res.redirect(
+                `${process.env.FRONTEND_URL}/dashboard`
+            );
 
+        }
         user.isVerified = true;
         await user.save();
 
-        res.send({ message: "Email verified successfully!" });
     } catch (error) {
         res.status(400).send({ message: "Invalid or expired token" });
     }
 });
 
 
-// GOOGLE APP PASSWORD : donk akio ysmm uubl
-// router.post("/register", async (req, res) => {
-//     try {
-//         const { username, email, password } = req.body;
-//         if (!username || !password || !email) {
-//             return res.send({ message: "All fields are required" });
-//         }
-//         const hashedPassword = await bcrypt.hash(password, 12);
-//         // console.log(hashedPassword);
-//         // res.send(hashedPassword)
-
-//         const data = await new User({ email, username, password: hashedPassword });
-//         await data.save();
-
-//         return res.send({ message: "user created succesfully", user: data });
-//     } catch (error) {
-//         console.log("error::::", error);
-//         if (error?.errorResponse?.errmsg.includes("duplicate key error")) {
-//             return res.send({ message: "Email already registered" });
-//         }
-//     }
-// });
-
-
 router.post("/login", async (req, res) => {
     try {
         console.log("CHECK BODY");
-        
+
         const { email, password } = req.body;
         console.log(email);
         console.log(password);
-        
-        
+
+
         const emailExist = await User.findOne({ email });
         console.log(emailExist);
-        
+
         if (!emailExist) {
             return res.status(401).send({ message: "Account Not Found" });
         }
         console.log("CHECK BODY 1");
-        
+
         if (!emailExist.isVerified) {
             return res.status(400).send({ message: "Please verify your email first." });
         }
