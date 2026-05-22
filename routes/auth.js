@@ -26,6 +26,7 @@ router.post("/register", async (req, res) => {
         if (!username || !password || !email) {
             return res.send({ message: "All fields are required" });
         }
+        // console.log(process.env.BACKEND_URL);
 
         const hashedPassword = await bcrypt.hash(password, 12);
         const data = new User({ email, username, password: hashedPassword, isVerified: false });
@@ -41,8 +42,10 @@ router.post("/register", async (req, res) => {
             }
         });
 
-        const verifyUrl = `${process.env.BACKEND_URL}/auth/verify/${token}`;
-
+        const verifyUrl = `http://localhost:5000/auth/verify/${token}`;
+        // const verifyUrl = `${process.env.BACKEND_URL}/auth/verify/${token}`;
+        console.log(verifyUrl);
+        
         const mailOptions = {
             from: "aabdullahaslam91@gmail.com",
             to: email,
@@ -82,6 +85,8 @@ router.get("/verify/:token", async (req, res) => {
 
         if (user.isVerified) {
             // return res.send({ message: "User already verified" });
+            console.log("Hello");
+            
             return res.redirect(
                 `${process.env.FRONTEND_URL}/dashboard`
             );
