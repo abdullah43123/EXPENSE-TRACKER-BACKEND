@@ -42,8 +42,8 @@ router.post("/register", async (req, res) => {
             }
         });
 
-        const verifyUrl = `http://localhost:5000/auth/verify/${token}`;
-        // const verifyUrl = `${process.env.BACKEND_URL}/auth/verify/${token}`;
+        // const verifyUrl = `http://localhost:5000/auth/verify/${token}`;
+        const verifyUrl = `${process.env.BACKEND_URL}/auth/verify/${token}`;
         console.log(verifyUrl);
         
         const mailOptions = {
